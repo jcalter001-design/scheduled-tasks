@@ -26,7 +26,8 @@ import smtplib
 
 #constant for readability, used to replace the generic name with the dynamically chosen name for the letter
 TEMPLATE_NAME = "[NAME]"
-MY_EMAIL = "jcalter001@gmail.com"
+MY_EMAIL = os.environ.get("MY_EMAIL")
+MY_PASSWORD = os.environ.get("MY_PASSWORD")
 
 
 #Saves the day and month to a set of variables to be used for checking birthdays going forward
@@ -45,7 +46,7 @@ def send_email(name, email):
     final_letter = letter_template.replace(TEMPLATE_NAME, name)
     with smtplib.SMTP("smtp.gmail.com") as connection:
         connection.starttls()
-        connection.login(user=MY_EMAIL, password="wdno wypa deqd bdob")
+        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
         connection.sendmail(from_addr=MY_EMAIL,
                             to_addrs=email,
                             msg=f"Subject: Happy Birthday!\n\n{final_letter}".encode("utf8"))
